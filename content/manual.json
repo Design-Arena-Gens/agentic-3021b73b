@@ -1,0 +1,375 @@
+{
+  "title": "Manuel de veille m?diatique audiovisuelle",
+  "version": "1.0",
+  "sections": [
+    {
+      "title": "1. Objet, p?rim?tre et principes",
+      "content": [
+        "Ce manuel d?finit le cadre op?rationnel, juridique et technique d?un service de veille m?diatique centr? sur les contenus audiovisuels (radio, TV, podcasts, plateformes vid?o, flux live et VOD).",
+        "Il s?adresse aux responsables de veille, analystes, data/ML engineers, responsables juridiques et s?curit?."
+      ],
+      "lists": [
+        {
+          "title": "Principes directeurs",
+          "items": [
+            "Conformit? by design: respect strict des droits d?auteur, RGPD et obligations sectorielles.",
+            "Finalit? l?gitime: veille concurrentielle, r?putationnelle, r?glementaire ou recherche.",
+            "Minimisation: ne collecter que le n?cessaire pour la finalit? d?clar?e.",
+            "Tra?abilit?: logs, journaux d?acc?s, et conservation contr?l?e.",
+            "Qualit?: exactitude des donn?es, horodatage fiable, m?tadonn?es structur?es."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2. Gouvernance et responsabilit?s",
+      "content": [
+        "Le service est structur? autour d'une gouvernance claire avec une cha?ne de responsabilit?s et d?escalade."
+      ],
+      "lists": [
+        {
+          "title": "R?les cl?s (RACI)",
+          "items": [
+            "Responsable de veille: d?finit le p?rim?tre, valide les livrables, priorise les sources.",
+            "Analyste m?dias: configure les requ?tes, qualifie les signaux et r?dige les synth?ses.",
+            "Data/ML Engineer: maintient l?ingestion, le pipeline de traitement et l?indexation.",
+            "D?veloppeur plateforme: UX, recherche, tableaux de bord, automatisations.",
+            "S?curit?/RGPD: contr?le des acc?s, DPIA, registres de traitements, audits.",
+            "Juridique/IP: v?rifie les droits d?exploitation, exceptions de courte citation, licences.",
+            "Support N2/N3: MCO, astreinte, gestion incidents et continuit? d?activit?."
+          ]
+        },
+        {
+          "title": "Instances de pilotage",
+          "items": [
+            "Comit? hebdomadaire de priorisation (30 min).",
+            "Comit? mensuel de conformit? et risques (60 min).",
+            "Revue trimestrielle des KPIs et roadmap (90 min)."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3. Sources et couverture",
+      "content": [
+        "La couverture doit concilier pertinence, diversit? et faisabilit? juridique/technique."
+      ],
+      "lists": [
+        {
+          "title": "Cat?gories de sources",
+          "items": [
+            "Cha?nes TV et radios (flux lin?aires, replay).",
+            "Podcasts (RSS, plateformes).",
+            "Plateformes vid?o (cha?nes officielles, ?missions, conf?rences).",
+            "Flux live (?v?nements, conf?rences, webinaires).",
+            "D?p?ches et communiqu?s vid?o institutionnels."
+          ]
+        },
+        {
+          "title": "Crit?res de s?lection",
+          "items": [
+            "Audience et impact m?diatique.",
+            "Pertinence th?matique vs. axes de veille.",
+            "Stabilit? d?acc?s et qualit? technique du flux.",
+            "Conditions d?utilisation/licences et risques juridiques.",
+            "Co?t de collecte et valeur ajout?e analytique."
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Gestion du catalogue de sources",
+          "content": [
+            "Maintenir un inventaire versionn? avec propri?taire, statut, politique d?acc?s, SLA et notes juridiques."
+          ],
+          "lists": [
+            {
+              "title": "Statuts",
+              "items": [
+                "Candidate (?valuation en cours)",
+                "Active (collecte en production)",
+                "Surveill?e (qualit? instable/incidente)",
+                "Suspendue (risques ou co?ts)",
+                "Retir?e (obsol?te ou non conforme)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4. Architecture technique de r?f?rence",
+      "content": [
+        "L?architecture suit un pipeline: Ingestion ? Stockage ? Traitements ? Indexation ? Restitution ? Archivage."
+      ],
+      "lists": [
+        {
+          "title": "Composants",
+          "items": [
+            "Collecte: planification, downloaders, connecteurs API, enregistreurs de flux.",
+            "Transcodage: normalisation audio/vid?o, d?tection silences, VAD.",
+            "ASR/Transcription: multilingue, diarisation, timecodes.",
+            "Traduction et NER: alignement segments, entit?s nomm?es, sentiments.",
+            "Indexation: recherche plein-texte, filtres, facettes, embeddings.",
+            "Restitution: UI web, alertes, exports, API.",
+            "Observabilit?: logs, m?triques, traces, qualit? de donn?es.",
+            "S?curit?: IAM, chiffrement au repos/en transit, DLP."
+          ]
+        },
+        {
+          "title": "Technologies indicatives (OSS/Cloud)",
+          "items": [
+            "FFmpeg pour capture/transcodage.",
+            "Whisper, Vosk, ou services cloud ASR (avec DPIA).",
+            "Transformers pour NER/sentiment; outils de traduction (DeepL, cloud).",
+            "Elasticsearch/OpenSearch et/ou vecteurs (FAISS, pgvector).",
+            "Airflow/Argo pour l?orchestration; Kafka/SQS pour la messagerie.",
+            "Grafana/Prometheus/ELK pour l?observabilit?.",
+            "Vault/KMS pour secrets; S3/Glacier pour archivage."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5. Processus op?rationnels (SOP)",
+      "content": [
+        "Standard Operating Procedures pour une exploitation robuste, testable et audit?e."
+      ],
+      "subsections": [
+        {
+          "title": "Ingestion et enregistrement",
+          "content": [
+            "Planifier la capture selon les grilles/programmes; v?rifier les droits d?enregistrement.",
+            "Monitorer le d?bit, la perte de paquets et la qualit? A/V; basculer sur source secours si besoin."
+          ],
+          "lists": [
+            {
+              "title": "Check d?marrage quotidien",
+              "items": [
+                "Sant? des connecteurs et quotas API.",
+                "Espace disque/objets disponible et alertes de seuil.",
+                "Qualit? flux (bitrate, erreurs).",
+                "?checs de jobs d?ingestion < 1%."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Transcription et traduction",
+          "content": [
+            "Utiliser mod?les adapt?s par langue/domaine; conserver timecodes."
+          ],
+          "lists": [
+            {
+              "title": "Qualit? minimale",
+              "items": [
+                "WER cible: radio < 15%, TV < 10%.",
+                "Diarisation correcte des locuteurs principaux.",
+                "Traduction post-?dit?e pour livrables externes sensibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enrichissements (NER, th?mes, sentiments)",
+          "content": [
+            "D?finir taxonomie th?matique; entra?ner/?valuer des mod?les; versionner."
+          ],
+          "lists": [
+            {
+              "title": "Contr?les",
+              "items": [
+                "F1-score > 0,75 sur jeux de test repr?sentatifs.",
+                "Biais et drifts surveill?s; r?-entrainements planifi?s.",
+                "Explicabilit? minimale (ex: mots-cl?s saillants)."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Indexation et recherche",
+          "content": [
+            "Indexer texte, timecodes, m?tadonn?es (source, date, langue), entit?s, embeddings."
+          ],
+          "lists": [
+            {
+              "title": "Facettes recommand?es",
+              "items": [
+                "Source/Cha?ne",
+                "Langue",
+                "Th?me",
+                "P?riode",
+                "Type de contenu (?mission, podcast, reportage)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alerting et diffusion",
+          "content": [
+            "D?finir r?gles d?alerte (mots-cl?s, entit?s, seuils sentiment) et canaux (email, chat).",
+            "Inclure extraits audio/vid?o courts (courte citation) et liens reproductibles."
+          ],
+          "lists": [
+            {
+              "title": "Gabarits de livrables",
+              "items": [
+                "Alerte flash (? 150 mots, horodat?e, source).",
+                "Brief quotidien (top 10 signaux).",
+                "Rapport hebdo (tendances, th?mes, tonalit?).",
+                "Note d?analyse (deep dive, annexes)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "6. Conformit? juridique et ?thique",
+      "content": [
+        "Les traitements reposent sur une base l?gale (int?r?t l?gitime, contrat, obligation l?gale ou recherche)."
+      ],
+      "lists": [
+        {
+          "title": "Exigences RGPD",
+          "items": [
+            "Base l?gale document?e, registre des traitements, DPIA si n?cessaire.",
+            "Minimisation, suppression programm?e, PIA pour services cloud hors UE.",
+            "Droits des personnes (acc?s, opposition) trait?s via un point de contact."
+          ]
+        },
+        {
+          "title": "Droits d?auteur et voisins",
+          "items": [
+            "V?rifier exceptions: courte citation, panorama, analyse interne; privil?gier liens vers sources.",
+            "Limiter la dur?e de conservation des copies; journaliser les usages.",
+            "N?gocier licences pour rediffusion ?largie."
+          ]
+        },
+        {
+          "title": "?thique",
+          "items": [
+            "?viter la surveillance cibl?e de personnes; privil?gier l?agr?gation publique.",
+            "Transparence envers les parties prenantes sur les finalit?s.",
+            "Contr?les de biais et de d?rives algorithmiques."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "7. S?curit?, acc?s et continuit?",
+      "content": [
+        "La s?curit? suit une approche Zero Trust avec contr?le d?acc?s granulaire et chiffrement syst?matique."
+      ],
+      "lists": [
+        {
+          "title": "Mesures cl?s",
+          "items": [
+            "IAM par r?le, MFA obligatoire, journaux d?acc?s conserv?s 12 mois.",
+            "Chiffrement en transit (TLS 1.2+) et au repos (AES-256, KMS).",
+            "Segmentation r?seau et secrets en coffre-fort (ex: Vault).",
+            "Backups quotidiens, tests de restauration trimestriels.",
+            "Plan de continuit? avec RTO ? 4h, RPO ? 1h."
+          ]
+        },
+        {
+          "title": "Gestion des incidents",
+          "items": [
+            "Runbooks par type d?incident (collecte, stockage, ASR, indexation).",
+            "Escalade N1?N3, journal d?incident, post-mortem 5 whys.",
+            "Communication interne et externe coordonn?e."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "8. KPIs et qualit? de service",
+      "content": [
+        "Des indicateurs mesurent la couverture, la fra?cheur, la qualit? et l?usage."
+      ],
+      "lists": [
+        {
+          "title": "KPIs recommand?s",
+          "items": [
+            "Taux de r?ussite d?ingestion (% par source).",
+            "Latence de disponibilit? (diffusion ? indexation).",
+            "WER/qualit? transcription par langue.",
+            "Taux de rappel/pr?cision des alertes.",
+            "Taux d?adoption (utilisateurs actifs, requ?tes, exports)."
+          ]
+        },
+        {
+          "title": "SLA/SLI/SLO",
+          "items": [
+            "SLI disponibilit? pipeline, SLO 99,5% mensuel.",
+            "SLO latence d?alerte ? 5 min pour sources prioritaires.",
+            "SLA support: r?ponse N2 en < 2h ouvr?es."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "9. Restitution et produits de veille",
+      "content": [
+        "La restitution doit ?tre exploitable, sourc?e et actionnable."
+      ],
+      "lists": [
+        {
+          "title": "Formats",
+          "items": [
+            "Tableaux de bord interactifs (tendances, pics, tonalit?).",
+            "Alertes temps r?el (email, chat) avec extraits et liens.",
+            "Briefs quotidiens/hebdomadaires et notes d?analyse.",
+            "Exports CSV/JSON/PDF et API pour int?gration."
+          ]
+        },
+        {
+          "title": "Bonnes pratiques",
+          "items": [
+            "Toujours citer la source, date, horodatage, et contexte.",
+            "Qualifier l?incertitude et limites m?thodologiques.",
+            "Proposer des actions ou d?cisions potentielles."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "10. Annexes (mod?les et checklists)",
+      "content": [
+        "Mod?les pr?ts ? l?emploi pour acc?l?rer l?op?rationnalisation."
+      ],
+      "lists": [
+        {
+          "title": "Check d?marrage source",
+          "items": [
+            "Droits/licences v?rifi?s",
+            "Qualit? flux test?e",
+            "Stockage dimensionn?",
+            "Monitoring configur?",
+            "Risques document?s"
+          ]
+        },
+        {
+          "title": "Mod?le d?alerte flash",
+          "items": [
+            "Objet: [Mot-cl?/Th?me] ? [Source] ? [Date/Heure]",
+            "R?sum? (?150 mots)",
+            "Extrait (lien/horodatage)",
+            "Contexte et impact",
+            "Actions sugg?r?es"
+          ]
+        },
+        {
+          "title": "Mod?le de note d?analyse",
+          "items": [
+            "R?sum? ex?cutif",
+            "Constats sourc?s",
+            "Analyse et limites",
+            "Impacts et sc?narios",
+            "Recommandations"
+          ]
+        }
+      ]
+    }
+  ]
+}
